@@ -9,6 +9,7 @@
         color: "#bbb",
         borders: {color: "#333", thickness: 4},
         location: {x:120, y:40},
+        wall_friction_loss: 0.6,
     };
     const ball = {
         color: "#111",
@@ -65,25 +66,56 @@
         ball.location.y += ball.speed.y;
         let b_loc = ball.location;
         if(b_loc.x >= table.size.width - ball.radius) {
-            ball.speed.x *= -1;
+            ball.speed.x *= -table.wall_friction_loss;
             ball.location.x = table.size.width - ball.radius;
         } else if (b_loc.x <= 0 + ball.radius) {
-            ball.speed.x *= -1;
+            ball.speed.x *= -table.wall_friction_loss;
             ball.location.x = 0 + ball.radius;
         }
         if (b_loc.y >= table.size.height - ball.radius) {
-            ball.speed.y *= -1;
+            ball.speed.y *= -table.wall_friction_loss;
             ball.location.y = table.size.height - ball.radius;
         } else if (b_loc.y <= 0 + ball.radius) {
-            ball.speed.y *= -1;
+            ball.speed.y *= -table.wall_friction_loss;
             ball.location.y = 0 + ball.radius;
         }
+        // friction_influence(ball);
+
 
 
         requestAnimationFrame(animation);
     }
 
+    function friction_influence(ball) {
+        let friction = table.friction;
+        if(Math.abs(ball.speed.x) <= friction) {
+            ball.speed.x == 0
+        }
+        if (ball.speed.x > 0) {
+            ball.speed.x -= friction
+        } else if (ball.speed.x < 0) {
+            ball.speed.x += friction
+        }
 
+        if(Math.abs(ball.speed.y) <= friction ) {
+            ball.speed.y == 0
+        } else {
+
+        }
+
+        if (ball.speed.y > 0) {
+            ball.speed.y -= friction
+        } else if (ball.speed.y < 0) {
+            ball.speed.y += friction
+        }
+    }
+
+    canvas.onmouseup = function (e) {
+        let mx = e.clientX - canvas.getBoundingClientRect().x;
+        let my = e.clientY - canvas.getBoundingClientRect().y;
+        ball.speed.x = -(mx - ball.location.x)/8;
+        ball.speed.y = -(my - ball.location.y)/8;
+    }
     
     
     animation();
