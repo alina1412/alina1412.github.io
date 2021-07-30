@@ -5,10 +5,13 @@ import config from "./sub_js/config.mjs";
 // let a = (b,c) => {};
 
 
-function run_changes(ctx) {
+function run_changes(ctx, grid_of_states) {
     const run_changes_ctx = function() {
-        draw_rec(ctx, rec_parameters);
-        change_rec_location(rec_parameters);
+
+        // grid_of_states = get_grid(grid_of_states);
+        draw_rec(ctx, rec_parameters, grid_of_states);
+
+        // change_rec_location(rec_parameters);
         requestAnimationFrame(run_changes_ctx);
     };
     run_changes_ctx();
@@ -20,41 +23,64 @@ const rec_parameters = {
 }
 
 
-function draw_rec(ctx, rec_parameters) {
+function rowOfRects(ctx, row, x, y) {
+    // let {x, y} = rec_parameters.loc;
+    for (let state of row) {
+        // console.log(state, x, y)
 
-    // console.log(rec_parameters);
+        if (state == 1) {
+            // ctx.strokeStyle = "black";
+            ctx.rect(x,y,30,30);
+            ctx.fillStyle = "white";
+            ctx.fillRect(x,y,30,30);
+            ctx.stroke();
+            // ctx.clearRect(x-10,y-10,110,110);
+        }
+        else {
+            ctx.rect(x,y,30,30);
+            ctx.fillStyle = "black";
+            ctx.fillRect(x,y,30,30);
+            ctx.stroke();
+        }
+        x += 30;
+    }
 
+}
+
+
+
+function draw_rec(ctx, rec_parameters, grid_of_states) {
     let {x, y} = rec_parameters.loc;
     ctx.beginPath();
-    ctx.clearRect(x-10,y-10,110,110);
-    ctx.fillStyle = "blue";
-    ctx.fillRect(x,y,100,100); 
+    ctx.lineWidth="1";
+    ctx.strokeStyle = "blue";
+    
+    for (let state of grid_of_states) {
+        let row = state;
+        // console.log(row, y)
+        rowOfRects(ctx, row, x, y);
+        y += 30;
+    }
+
     ctx.closePath();
+
+  
 }
 
 
-function change_rec_location(rec_parameters) {
-    let {x, y} = rec_parameters.loc;
-    //...
-    x += 2;
-    y += 2;
-    rec_parameters.loc.x = x;
-    rec_parameters.loc.y = y;
-
-}
 
 
-// 
+
+
+
 
 
 let button2 = document.querySelector("#clear");
-// button2.addEventListener("click", () => {
-//     clear(canv);
-//     console.log("Button Clear clicked.");
-// });
+
 function clear(ctx, canvas) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
 
 function draw_a(ctx, canv) {
 
@@ -74,21 +100,36 @@ function draw_a(ctx, canv) {
         ctx.lineCap = 'round';
         ctx.fillStyle = "rebeccapurple";
 
-        ctx.lineTo(e.clientX, e.clientY);
+        let x = e.clientX - canv.getBoundingClientRect().left
+        let y = e.clientY - canv.getBoundingClientRect().top
+
+        ctx.lineTo(x, y);
         ctx.stroke();
         ctx.beginPath();
 
-        ctx.arc(e.clientX, e.clientY, 10, 0, Math.PI * 2);
+        ctx.arc(x, y, 10, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.beginPath();
-        ctx.moveTo(e.clientX, e.clientY);
+        ctx.moveTo(x, y);
     }
 
     canv.addEventListener('mousedown', startPosistion);
     canv.addEventListener('mouseup', endPosistion);
     canv.addEventListener('mousemove', draw2);
  
+}
+
+// let grid_of_states;
+
+function get_grid(newgrid) {
+    // let newgrid = [[1,0,0,0], [0,0,1,1]]
+    for (let i in newgrid) {
+        for (let j in newgrid[i]) {
+            newgrid[i][j] = !newgrid[i][j];
+        }
+    }
+    return newgrid;
 }
 
 
@@ -99,22 +140,25 @@ function draw_a(ctx, canv) {
     const canvas = document.getElementById("canvas001");
     const ctx = canvas.getContext("2d");
 
-    
-    // ctx.rect(20,20,150,100);
-    // if (ctx.isPointInPath(20,50))
-    // {
-    //  ctx.stroke();
-    // };
-    //draw_rec(ctx, rec_parameters);
-    run_changes(ctx);
+
+    let grid_of_states = [[1,0,0,0], [0,0,1,1]];
+    // let grid_of_states = get_grid();
+    // console.log(grid_of_states);
+    // grid_of_states = [[1,0,0,0], [0,0,1,1]];
+    run_changes(ctx, grid_of_states);
+
     var canv = document.getElementById('canvas001');
     draw_a(ctx, canv);
 
-    button2.onclick = function(ctx, canvas) {
+    button2.onclick = function(e) {
         clear(ctx, canvas);
-      };
+        console.log(e);
+    };
+    window.life_timer = setInterval(get_grid, 1000, grid_of_states)
 
 })();
 
+
+// clearInterval(window.life_timer)
 
 

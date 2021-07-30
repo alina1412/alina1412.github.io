@@ -1,3 +1,53 @@
+
+
+function draw_rec(ctx, rec_parameters) {
+
+    let {x, y} = rec_parameters.loc;
+    ctx.beginPath();
+    ctx.clearRect(x-10,y-10,110,110);
+    ctx.fillStyle = "blue";
+    ctx.fillRect(x,y,100,100); 
+    ctx.closePath();
+
+    
+}
+
+function change_rec_location(rec_parameters) {
+    let {x, y} = rec_parameters.loc;
+    //...
+    x += 2;
+    y += 2;
+    rec_parameters.loc.x = x;
+    rec_parameters.loc.y = y;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var config = {
     type: Phaser.AUTO,
     width: 900,
