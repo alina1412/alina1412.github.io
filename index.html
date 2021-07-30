@@ -21,9 +21,22 @@
             <!-- content here -->
         </canvas>
     </div>
-    <p>
-        <input type="text" name="_" id="inp_t_000">
-    </p>
+
+    <button class="btn success" id="start">Start from beginning</button>
+    <button class="btn info">Stop</button>
+    <button class="btn default" id="clear">Clear</button> 
+
+
 </body>
 
+
+<script>
+    let button = document.querySelector("#start");
+    button.addEventListener("click", () => {
+      console.log("Button Start clicked.");
+    });
+
+
+
+  </script>
 </html>
