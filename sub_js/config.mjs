@@ -2,10 +2,7 @@ const config = {
     defaults: {
         some_name: 0,
         name2: "name"
-
     },
-
-    
 };
 
 config.init_defaults = function(obj, defaults, custom_defaults) {
