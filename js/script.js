@@ -2,6 +2,7 @@ import Life from './life.mjs';
 
 let canvas = document.getElementById("canvas001");
 let life = new Life(canvas);
+window.life = life;
 canvas.onclick = (e) => life.canvas_clicked(e);
 
 let btnStart = document.getElementById("btn_start_animation")

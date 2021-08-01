@@ -2,7 +2,7 @@ import Grid from "./grid.mjs";
 import LifeRule from "./life_rule.mjs";
 import Drawer from "./drawer.mjs";
 
-const CELL_SIZE = 12; // in pixels
+const CELL_SIZE = 16; // in pixels
 
 class Life {
   static calculate_grid_size(canvas) {
@@ -37,8 +37,8 @@ class Life {
 
     let grid_size = Life.calculate_grid_size(canvas);
     this.grid = new Grid(grid_size.cells_in_one_row
-      , grid_size.rows);
-    
+      , grid_size.rows, CELL_SIZE);
+    this.grid.render(this.drawer);
     // console.log("Life::constructor")
   }
 

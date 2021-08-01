@@ -6,9 +6,14 @@ export default class LifeRule {
         
     }
     develop(grid) {
-        console.log("LifeRule::develop");
 
-        
+        for (let i = 0; i < grid.size.height; i += 1) {
+            for (let j = 0; j < grid.size.width; j += 1) {
+                grid.cells[i][j] = Math.round(Math.random());
+            }
+        }
+
+        console.log("LifeRule::develop");
     }
 }
 
