@@ -9,7 +9,7 @@ let get_grid = function(newgrid) {
 }
 
 
-var gameOfLife = function(board) {
+let gameOfLife = function(board) {
     let m = board.length;
     let n = board[0].length;
     
@@ -56,6 +56,7 @@ var gameOfLife = function(board) {
                 }
             }
         }
+        
     }
      
     for (let j in [...Array(n).keys()]) {
@@ -70,7 +71,7 @@ var gameOfLife = function(board) {
             }
         }
     }
-     
+    return board;
 };
 
 
@@ -89,5 +90,5 @@ const lifegrid = 0
 // };
 
 
-export {lifegrid, get_grid}; 
+export {lifegrid, get_grid, gameOfLife}; 
 

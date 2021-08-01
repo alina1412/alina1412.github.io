@@ -15,6 +15,10 @@ drawing.mjs - working with canvas context
 function run_changes(ctx, grid_of_states) {
     const run_changes_ctx = function() {
         grid.draw_cells(ctx, grid.rec_parameters, grid_of_states);
+        if (drawing.isMouseClicked) {
+            // console.log(drawing.draw_init_states.collect_points);
+        }
+        
         requestAnimationFrame(run_changes_ctx);
     };
     run_changes_ctx();
@@ -31,20 +35,28 @@ function clear(ctx, canvas) {
     const canvas = document.getElementById("canvas001");
     const ctx = canvas.getContext("2d");
 
-    let grid_of_states = [[1,0,0,0], [0,0,1,1]];
+    let grid_of_states = [[1,0,0,0], [1,0,1,0], [1,0,0,0], [1,0,0,0], [0,0,0,1]];
     run_changes(ctx, grid_of_states);
 
-    drawing.draw(ctx, canvas);
+    // drawing.draw(ctx, canvas);
 
     button2.onclick = function(e) {
         clear(ctx, canvas);
         console.log(e);
     };
+    // let points = [];
+    // let points = 
+    drawing.draw_init_states(ctx, canvas);
+    
 
-    window.life_timer = setInterval(life.get_grid, 1000, grid_of_states)
-
+    // window.life_timer = setInterval(life.get_grid, 1000, grid_of_states)
+    window.life_timer = setInterval(life.gameOfLife, 1000, grid_of_states)
+    // console.log(drawing.buf); 
+    
 })();
 
 
-
+// export function change_grid(points, grid_of_states) {
+//     console.log(collect_points);
+// }
 
