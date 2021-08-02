@@ -1,94 +1,85 @@
 
-let get_grid = function(newgrid) {
-    for (let i in newgrid) {
-        for (let j in newgrid[i]) {
-            newgrid[i][j] = !newgrid[i][j];
-        }
+// Rule 1:  B3/S23
+let rulesG = [{B:[3], S:[2,3]}];
+// B{number list}/S{number list} B3/S23
+
+export class GameOfLife {
+    constructor(board) {
+        this.board = board;
+        this.col_length = board.length;
+        this.row_length = board[0].length;
+        this.AliveToAlive = 1;
+        this.AliveToDead = -1;
+        this.DeadToAlive = 3;
+        this.buf = [[-1, -1], [-1, 0],  [-1, 1],  [0, -1],  [0, 1],  [1, -1],  [1, 0],  [1, 1]];
+
     }
-    return newgrid;
-}
-
-
-let gameOfLife = function(board) {
-    let m = board.length;
-    let n = board[0].length;
-    
-    // DeadToDead = 0
-    let AliveToAlive = 1;
-    let AliveToDead = -1;
-    let DeadToAlive = 3;
-    
-    function check_around(i,j, board, m, n) {
-        let buf = [[-1, -1], [-1, 0],  [-1, 1],  [0, -1],  [0, 1],  [1, -1],  [1, 0],  [1, 1]];
+ 
+    check_neighbours(i,j) {            
         let count = 0;
-        let x = 0;
-        let y = 0;
-        for (let direc of buf) {
-            x = direc[0] + i;
-            y = direc[1] + j;
-            
-            if (0 <= x && x < m && 0 <= y && y < n) {
-                if ((board[x][y] == AliveToAlive) | (board[x][y] == AliveToDead)) {
-                    count += 1;
-                }
+        for (let direc of this.buf) {
+            let x = direc[0] + i;
+            let y = direc[1] + j;
+
+            if ((0 <= x && x < this.col_length && 0 <= y && y < this.row_length) && 
+               ((this.board[x][y] == this.AliveToAlive) || (this.board[x][y] == this.AliveToDead))) {
+                    count += 1;    
             }
         }
         return count;
     }
-
     
-    for (let j in [...Array(n).keys()]) {
-        for (let i in [...Array(m).keys()]) {
-            let x = parseInt(i)
-            let y = parseInt(j)
-            let res = check_around(x,y, board, m, n)
-            if (board[x][y] == 1) {
-                if (res < 2 | res > 3) {
-                    board[x][y] = AliveToDead;
+    first_change_in_place(board) {
+        this.board = board;
+        for (let j = 0; j < this.row_length; j += 1) {
+            for (let i = 0; i < this.col_length; i += 1) {
+                let amount_neighbours = this.check_neighbours(i,j);
+                if (this.board[i][j] == 1) {
+                    if (rulesG[0]["S"].indexOf(amount_neighbours) >= 0) { // (amount_neighbours < 2 | amount_neighbours > 3)
+                        this.board[i][j] = this.AliveToDead;
+                    }
+                    else {
+                        this.board[i][j] = this.AliveToAlive;
+                    }
                 }
                 else {
-                    board[x][y] = AliveToAlive;
-                }
-            }
-            else {
-                if (res == 3) {
-                    board[x][y] = DeadToAlive;
+                    if (rulesG[0]["B"].indexOf(amount_neighbours) >= 0) {     // amount_neighbours == 3
+                        this.board[i][j] = this.DeadToAlive;
+                    }
                 }
             }
         }
-        
     }
-     
-    for (let j in [...Array(n).keys()]) {
-        for (let i in [...Array(m).keys()]) {
-            let x = parseInt(i)
-            let y = parseInt(j)
-            if (board[x][y] > 0) {
-                board[x][y] = 1;
-            }
-            else {
-                board[x][y] = 0;
+         
+    final_change() {
+        for (let j = 0; j < this.row_length; j += 1) {
+            for (let i = 0; i < this.col_length; i += 1) {
+                if (this.board[i][j] > 0) {
+                    this.board[i][j] = 1;
+                }
+                else {
+                    this.board[i][j] = 0;
+                }
             }
         }
     }
-    return board;
-};
-
-
-
-
-
-const lifegrid = 0
-// const lifegrid = {
     
-//     newgrid: get_grid([1,2,3,4]),
-
-//     bb: {
-//         some_name: 0,
-//         name2: "name"
-//     },
-// };
+}
 
 
-export {lifegrid, get_grid, gameOfLife}; 
+
+
+// Dummy for change back and forward
+// let get_grid = function(newgrid) {
+//     for (let i in newgrid) {
+//         for (let j in newgrid[i]) {
+//             newgrid[i][j] = !newgrid[i][j];
+//         }
+//     }
+//     return newgrid;
+// }
+
+
+
+// export {lifegrid, get_grid, gameOfLife}; 
 
