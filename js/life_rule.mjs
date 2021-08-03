@@ -6,6 +6,8 @@ export default class LifeRule {
         this.AliveToDead = -1;
         this.DeadToAlive = 3;
 
+        
+
         function get_notation(b_s_notattion_string) {
             function compartmentalize(x) {
                 let y = x.split('').map(function(item) {
