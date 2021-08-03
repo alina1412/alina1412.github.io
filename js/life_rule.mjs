@@ -6,43 +6,24 @@ export default class LifeRule {
         this.AliveToDead = -1;
         this.DeadToAlive = 3;
 
-        
-
         function get_notation(b_s_notattion_string) {
             function compartmentalize(x) {
                 let y = x.split('').map(function(item) {
-                return parseInt(item, 10);
+                    return parseInt(item, 10);
                 });
                 return y;
             }
-            let arr = b_s_notattion_string.split("/");
-            let arr2 = [arr[0].substring(1), arr[1].substring(1)];
-            let arr3 = [];
-            for (let num of arr2) {
-                arr3.push(compartmentalize(num));
-            }
-
-            let notation = {B: arr3[0], S: arr3[1]}
+            let [born, survive] = b_s_notattion_string
+                        .split("/")
+                        .map((word) => word.substring(1))
+                        .map(compartmentalize);
+            let notation = {B: born, S: survive}
             return notation;
-
-
-            // let ind = b_s_notattion_string.indexOf("/");
-            // let first_nums = [];
-            // let second_nums = [];
-            // for (let i = 1; i < ind; i += 1) {
-            //     first_nums.push(parseInt(b_s_notattion_string[i]));
-            // }
-            // for (let j = ind+2; j < b_s_notattion_string.length; j += 1) {
-            //     second_nums.push(parseInt(b_s_notattion_string[j]));
-            // }
-            // let notation = {B: first_nums, S: second_nums};
-            // console.log(notation);
-            // return notation;
         }
+
         this.notation = get_notation(b_s_notation_string);
         
         console.log(this.notation);
-        // console.log(this.notation["S"]);
     };
 
     develop(grid) {
