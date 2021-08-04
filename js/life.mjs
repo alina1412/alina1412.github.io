@@ -74,8 +74,11 @@ class Life {
 
   canvas_clicked(mouse_event) {
     console.log("canvas_clicked ", mouse_event);
-// let x = e.clientX - canv.getBoundingClientRect().left
-//         let y = e.clientY - canv.getBoundingClientRect().top
+    let x = mouse_event.clientX - this.canvas.getBoundingClientRect().left;
+    let y = mouse_event.clientY - this.canvas.getBoundingClientRect().top;
+    x = Math.floor(x);
+    y = Math.floor(y);
+    console.log(x,y);
   }
 
 
