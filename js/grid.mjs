@@ -5,7 +5,8 @@ class Grid {
     this.cells = [];
     this.cell_size = cell_size;
     for (let i = 0; i < height; i += 1) {
-        let row = new Array(width).fill(0);
+        // let row = new Array(width).fill(0);
+        let row = new Array(width).fill(Math.round(Math.random()));
         this.cells.push(row);
     }
   }
