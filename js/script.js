@@ -13,3 +13,6 @@ btnStop.onclick = () => life.animation_stop();
 
 let btnClear = document.getElementById("btn_clear_grid")
 btnClear.onclick = () => life.clear_grid();
+
+let btnRandomize= document.getElementById("btn_randomize_grid")
+btnRandomize.onclick = () => life.randomize_grid();

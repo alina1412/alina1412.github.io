@@ -69,7 +69,14 @@ class Life {
 
   clear_grid() {
     console.log("clear_grid");
-    // this.grid.clear();
+    this.grid.clear();
+    this.grid.render(this.drawer);
+  }
+
+  randomize_grid() {
+    console.log("randomize_grid");
+    this.grid.randomize();
+    this.grid.render(this.drawer);
   }
 
   canvas_clicked(mouse_event) {

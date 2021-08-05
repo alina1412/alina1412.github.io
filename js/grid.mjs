@@ -1,14 +1,21 @@
 
+const gen_2d_array = function(n, m, filler = (i, j) => 0) {
+  let arr = [];
+  for (const i of Array(n).keys()) {
+    let row = [];
+    for (const j of Array(m).keys()) {
+      row.push(filler(i, j));
+    }
+    arr.push(row);
+  }
+  return arr;
+};
+
 class Grid {
   constructor(width, height, cell_size) {
     this.size = {width: width, height: height};
-    this.cells = [];
+    this.cells = gen_2d_array(height, width, (i, j) => Math.round(Math.random()));
     this.cell_size = cell_size;
-    for (let i = 0; i < height; i += 1) {
-        // let row = new Array(width).fill(0);
-        let row = new Array(width).fill(Math.round(Math.random()));
-        this.cells.push(row);
-    }
   }
 
   get_cell_coordinates(row_num, col_num) {
@@ -35,6 +42,15 @@ class Grid {
 
     // drawer.draw_square([10,100], cs, "#ccc");
     // drawer.draw_square([10 + cs,100], cs, "#e30");
+  }
+
+  clear() {
+    this.cells = gen_2d_array(this.size.height, this.size.width);
+  }
+
+  randomize() {
+    this.cells = gen_2d_array(this.size.height, this.size.width, 
+      (i, j) => Math.round(Math.random()));
   }
 
 }
