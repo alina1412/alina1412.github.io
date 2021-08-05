@@ -54,7 +54,7 @@ export default class LifeRule {
             for (let i = 0; i < grid.size.height; i += 1) {
                 let amount_neighbours = LifeRule.check_neighbours(i,j, grid);
                 if (grid.cells[i][j] == 1) {
-                    if (LifeRule.notation["S"].indexOf(amount_neighbours) >= 0) { 
+                    if (LifeRule.notation["S"].indexOf(amount_neighbours) < 0) { 
                         grid.cells[i][j] = LifeRule.AliveToDead;
                     }
                     else {
