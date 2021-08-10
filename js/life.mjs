@@ -79,12 +79,14 @@ class Life {
     this.grid.render(this.drawer);
   }
 
+  #get_canvas_inner_coords(mouse_event) {
+    let {left: canvas_x, top: canvas_y} = this.canvas.getBoundingClientRect();
+    return {x: mouse_event.clientX - canvas_x, y: mouse_event.clientY - canvas_y};
+  }
+
   canvas_clicked(mouse_event) {
     console.log("canvas_clicked ", mouse_event);
-    let x = mouse_event.clientX - this.canvas.getBoundingClientRect().left;
-    let y = mouse_event.clientY - this.canvas.getBoundingClientRect().top;
-    x = Math.floor(x);
-    y = Math.floor(y);
+    let {x: x, y: y} = this.#get_canvas_inner_coords(mouse_event);
     this.grid.addcell(x,y, this.drawer);
   }
   
