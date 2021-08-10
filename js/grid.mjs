@@ -19,11 +19,14 @@ class Grid {
   }
 
   get_cell_coordinates(row_num, col_num) {
-    //   let position = {x: 0, y: 0};
-    //   position.x = col_num * this.cell_size;
-    //   position.y = row_num * this.cell_size;
       return [col_num * this.cell_size,
         row_num * this.cell_size];
+  }
+
+  get_cell_position(x, y) {
+    // let col_num = Math.floor(x / this.cell_size);
+    // let row_num = Math.floor(y / this.cell_size);
+    return [x, y].map(c => Math.floor(c / this.cell_size));
   }
 
   render(drawer) {
@@ -53,29 +56,11 @@ class Grid {
       (i, j) => Math.round(Math.random()));
   }
 
+
+
   addcell(x,y, drawer) {
     // console.log("addcell");
-    let changeI = 0;
-    let changeJ = 0;
-
-    for (let i = 0; i <= this.size.width; i += 1) {
-      let begin_w = i*this.cell_size;
-      // console.log("cells", begin_w);
-      if (begin_w - x < this.cell_size && begin_w - x > 0) {
-        changeI = i-1;
-        console.log("cells i", changeI);
-        break;
-      }
-    }
-    for (let j = 0; j <= this.size.height; j += 1) {
-      let begin_h = j*this.cell_size;
-      // console.log("cells", begin_h);
-      if (begin_h - y < this.cell_size && begin_h - y > 0) {
-        changeJ = j-1;
-        console.log("cells j", changeJ);
-        break;
-      }
-    }
+    let [changeI, changeJ] = this.get_cell_position(x, y);
 
     this.cells[changeJ][changeI] = 1;
     let fillColor = "#e30";
