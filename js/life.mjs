@@ -85,10 +85,9 @@ class Life {
     let y = mouse_event.clientY - this.canvas.getBoundingClientRect().top;
     x = Math.floor(x);
     y = Math.floor(y);
-    console.log(x,y);
+    this.grid.addcell(x,y, this.drawer);
   }
-
-
+  
 }
 
 export default Life;

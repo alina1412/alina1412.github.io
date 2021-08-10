@@ -53,5 +53,37 @@ class Grid {
       (i, j) => Math.round(Math.random()));
   }
 
+  addcell(x,y, drawer) {
+    // console.log("addcell");
+    let changeI = 0;
+    let changeJ = 0;
+
+    for (let i = 0; i <= this.size.width; i += 1) {
+      let begin_w = i*this.cell_size;
+      // console.log("cells", begin_w);
+      if (begin_w - x < this.cell_size && begin_w - x > 0) {
+        changeI = i-1;
+        console.log("cells i", changeI);
+        break;
+      }
+    }
+    for (let j = 0; j <= this.size.height; j += 1) {
+      let begin_h = j*this.cell_size;
+      // console.log("cells", begin_h);
+      if (begin_h - y < this.cell_size && begin_h - y > 0) {
+        changeJ = j-1;
+        console.log("cells j", changeJ);
+        break;
+      }
+    }
+
+    this.cells[changeJ][changeI] = 1;
+    let fillColor = "#e30";
+    let cs = this.cell_size
+    let position = this.get_cell_coordinates(changeJ, changeI);
+    drawer.draw_square(position, cs, fillColor);
+  }
+
+
 }
 export default Grid;
